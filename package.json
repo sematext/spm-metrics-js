@@ -1,0 +1,44 @@
+{
+  "name": "spm-metrics-js",
+  "version": "1.0.0",
+  "description": "Node.js client for Sematext SPM and Logsene.",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "bundle": "browserify -r ./lib/index.js:spm-metrics-js  > spm-metrics.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sematext/spm-metrics-js.git"
+  },
+  "keywords": [
+    "SPM",
+    "Sematext",
+    "performance",
+    "monitoring",
+    "APM",
+    "logging",
+    "Logsene",
+    "elasticsearch",
+    "custom metrics",
+    "KPI"
+  ],
+  "author": "Stefan Thies",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sematext/spm-metrics-js/issues"
+  },
+  "homepage": "https://github.com/sematext/spm-metrics-js",
+  "dependencies": {
+    "commander": "^2.6.0",
+    "extend": "^2.0.0",
+    "ip": "^0.3.2",
+    "request": "^2.53.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  }
+}
