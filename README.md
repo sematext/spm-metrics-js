@@ -1,11 +1,13 @@
 spm-metrics-js
 ==============
 
-Sematext Performance Monitoring - Custom Metrics and Event API client for node.js.
+[SPM Performance Monitoring](http://www.sematext.com/spm/) - Custom Metrics and Event API client for node.js.
 
-The Original API description is located [here](https://sematext.atlassian.net/wiki/display/PUBSPM/Custom+Metrics)
+This module implements:
+ - [custom metrics API](https://sematext.atlassian.net/wiki/display/PUBSPM/Custom+Metrics)  and
+ - [events API](https://sematext.atlassian.net/wiki/display/PUBSPM/Events+Integration)
 
-You can get a free account and API token at [www.sematext.com](https://apps.sematext.com/users-web/register.do)
+A free account to generate API tokens is available at [www.sematext.com](https://apps.sematext.com/users-web/register.do)
 
 # Installation
 ```
@@ -45,7 +47,7 @@ Add an event to SPM Events, the callback function is optional (see events of spm
 
     var spmClient = new SPM(token, 0)
     // configure defaults
-    var eventLogger = spmcm.getEventLogger ({
+    var eventLogger = spmClient.getEventLogger ({
             type: 'security',
             name: 'sec-logger',
             tags: ['security'],
@@ -71,5 +73,3 @@ You can add event handlers for errors and actions
     spmClient.on ('send metrics', console.log)
     spmClient.on ('send event', console.log)
 
-Enjoy monitoring your application metrics  [http://sematext.com/spm/index.html](http://sematext.com/spm/index.html)
-and log files [http://sematext.com/logsene/index.html](http://sematext.com/logsene/index.html)
