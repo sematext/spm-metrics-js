@@ -67,7 +67,7 @@ the metric object should be initialized by declaring an 'interval' for generatin
 
 Measurement functions like histogram(), meter(), timer() add calculated values as properties to the metrics like count, min, max, mean or percentiles. In SPM a metric called "time" might then apper as "time.min", "time.max", "time.mean" etc. 
 
-For example: If you want to send only 'count' and 'currentRate' calculated my a "meter" measurement to SPM you can use valueFilter option to filter what you send to SPM:
+For example: If you want to send only 'count' and 'currentRate' calculated by a "meter" measurement to SPM you can use valueFilter option to filter what you send to SPM:
 
 ```js
     var options = {name: 'requests', aggregation: 'avg', filter1: os.hostname(), valueFilter: ['count', 'currentRate']}
