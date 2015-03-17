@@ -1,7 +1,7 @@
 {
   "name": "spm-metrics-js",
-  "version": "1.0.0",
-  "description": "Node.js client for Sematext SPM and Logsene.",
+  "version": "1.0.1",
+  "description": "Node.js client for SPM - Custom Metrics and Event API",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
@@ -34,6 +34,7 @@
   "homepage": "https://github.com/sematext/spm-metrics-js",
   "dependencies": {
     "extend": "^2.0.0",
+    "measured": "^1.0.0",
     "request": "^2.53.0"
   },
   "devDependencies": {
