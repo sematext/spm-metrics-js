@@ -162,6 +162,13 @@ Timer measures the time between start() and end() call and provides as result pr
      timerMetric.save()
 ```
 
+### More Information about the measurement functions
+
+The measurement functions are based on the excellent [Measured](https://github.com/felixge/node-measured) package.
+We use a concept of delegate functions to simlify the combined usage of Custom Metrics and Measured. For example a call to metric.histogram() adds dynamically all Measured.Histogram functions to the metrics object created by getCustomMetrics(). The save() function uses toJSON() of the "Measured" objects to generate the calculated properties, which are added to each metric object.
+
+We recommend reading the documentation of [Measured](https://github.com/felixge/node-measured) for a better understanding of the measurement functions. 
+
 ## Create Events to correlatee with your metrics in SPM
 
 Add an event to SPM Events, the callback function is optional (see events of spm-metrics-js)
