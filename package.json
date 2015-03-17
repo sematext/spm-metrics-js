@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/sematext/spm-metrics-js",
   "dependencies": {
+    "delegate": "0.0.1",
     "extend": "^2.0.0",
     "measured": "^1.0.0",
     "request": "^2.53.0"
