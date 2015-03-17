@@ -49,22 +49,28 @@ Force sending the metrics immediately
 
 ## Custom Metrics advanced usage by utilizing measurements
 
-If you like to use this measurement functions and want to send the statistics in a regular period of time to SPM,
+If you want to apply statistical functions to metrics and send the results to SPM at a fixed interval to SPM,
 the metric object should be initialized by declaring an 'interval' for generating the statistics:
 
 ```js
       var options = {name: 'requests', aggregation: 'avg', filter1: os.hostname(), interval: 60000}
       var requestCounterMetric = spmClient.getCustomMetric (options)
 ```
+#### List of options
 
-When the interval parameter is specified a timer is created and there is no need to use the "save" function, the timer calls save() automatically.
-The save() function does capture the metric and resets meters, counters or timers.
+- name - the name of the metric
+- aggregation - the aggregation type 'avg', 'sum', 'min' or 'max', defaults to 'avg'
+- filter1 - a filter value for the first filter field in SPM User Interface
+- filter2 - a filter value for the second filter field in SPM User Interface
+- interval - time in ms to call save() periodically. Defaults to no automatic call of save(). The save() function captures the metric and resets meters, histograms, counters or timers.
+- valueFilter - Array of property names for calculated values. It limits the calculated values to the specified fields.
 
-Measurement functions like histogram(), meter(), timer() add calculated values to the metrics like count, min, max, mean or percentiles.
-In case you don't like to send all this values to SPM the used properties can be filtered using the "valueFilter" option.
+Measurement functions like histogram(), meter(), timer() add calculated values as properties to the metrics like count, min, max, mean or percentiles. In SPM a metric called "time" might then apper as "time.min", "time.max", "time.mean" etc. 
+
+For example: If you want to send only 'count' and 'currentRate' calculated my a "meter" measurement to SPM you can use valueFilter option to filter what you send to SPM:
 
 ```js
-    var options = {name: 'requests', aggregation: 'avg', filter1: os.hostname(), valueFilter: ['mean', 'count', 'currentRate']}
+    var options = {name: 'requests', aggregation: 'avg', filter1: os.hostname(), valueFilter: ['count', 'currentRate']}
 ```
 
 See details of used properties below.
@@ -81,7 +87,7 @@ A counter can be incremented and decremented
     userCounterMetric.inc()
     // or on logout
     userCounterMetric.dec()
-    // save data - only needed if not "interval" is not specified
+    // save data - only needed if no "interval" is specified
     userCounterMetric.save()
 ```
 
@@ -104,7 +110,7 @@ This values will be calculated and attached to your metric:
 
 - mean: The average rate since the meter was started.
 - count: The total of all values added to the meter.
-- currentRate: The rate of the meter since the last save() call.
+- currentRate: The rate of the meter since the meter was started.
 - 1MinuteRate: The rate of the meter biased towards the last 1 minute.
 - 5MinuteRate: The rate of the meter biased towards the last 5 minutes.
 - 15MinuteRate: The rate of the meter biased towards the last 15 minutes.
@@ -143,9 +149,7 @@ This values will be calculated and attached to your metric:
 - p99: See median, 99% percentile.
 - p999: See median, 99.9% percentile.
 
-
 In our example it would be "requestTime.min", "requestTime.max", "requestTime.p75"  etc.
-
 
 ### Timer
 
