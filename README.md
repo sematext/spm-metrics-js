@@ -67,7 +67,7 @@ the metric object should be initialized by declaring an 'interval' for generatin
 
 Measurement functions like histogram(), meter(), timer() add calculated values as properties to the metrics like count, min, max, mean or percentiles. In SPM a metric called "time" might then apper as "time.min", "time.max", "time.mean" etc. 
 
-For example: If you want to send only 'count' and 'currentRate' calculated by a "meter" measurement to SPM you can use valueFilter option to filter what you send to SPM:
+For example: If you want to send only 'count' and 'currentRate' calculated by a "meter" measurement to SPM you can use valueFilter option to limit what you send to SPM:
 
 ```js
     var options = {name: 'requests', aggregation: 'avg', filter1: os.hostname(), valueFilter: ['count', 'currentRate']}
@@ -162,7 +162,7 @@ Timer measures the time between start() and end() call and provides as result pr
      timerMetric.save()
 ```
 
-## Create Events to be correlated with your metrics in SPM
+## Create Events to correlatee with your metrics in SPM
 
 Add an event to SPM Events, the callback function is optional (see events of spm-metrics-js)
 
@@ -170,19 +170,19 @@ Add an event to SPM Events, the callback function is optional (see events of spm
     var spmClient = new SPM(token, 0)
     // configure defaults
     var eventLogger = spmClient.getEventLogger ({
-            type: 'security',
-            name: 'sec-logger',
-            tags: ['security'],
-            creator: 'me',
+            type: 'system',
+            name: 'system',
+            tags: ['job', 'queue'],
+            creator: 'jobsQ.js',
             data: 'String or Base64 coded content'})
 
     // send Event Message, the callback is optional
-    eventLogger.log ('user1 logged in', function (err, res) {
+    eventLogger.log ('forked new worker', function (err, res) {
         console.log(err || res)
     })
 
     process.on ('exit', function () {
-        eventLogger.log ('Exit program PID:' + process.pid)
+        eventLogger.log ('Exit job queue PID:' + process.pid)
     })
 ```
 
