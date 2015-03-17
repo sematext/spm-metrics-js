@@ -82,7 +82,7 @@ A counter can be incremented and decremented
     // or on logout
     userCounterMetric.dec()
     // save data - only needed if not "interval" is not specified
-    requestCounterMetric.save()
+    userCounterMetric.save()
 ```
 
 ### Meter
@@ -119,11 +119,11 @@ Keeps a resevoir of statistically relevant values biased towards the last 5 minu
         var options = {name: 'requestTime', aggregation: 'avg', filter1: os.hostname()}
         var requestTimeMetric = spmClient.getCustomMetric (options)
         // activate histogram functions
-        requestCounterMetric.histogram()
+        requestTimeMetric.histogram()
         // use histogram update function e.g. in in each request with measured time
-        requestCounterMetric.update(measuredTime)
+        requestTimeMetric.update(measuredTime)
         // save data and reset histogram - only needed if no "interval" is specified
-        var metricValues = requestCounterMetric.save()
+        var metricValues = requestTimeMetric.save()
         // output values
         console.log (metricValues)
 ```
@@ -155,7 +155,7 @@ Timer measures the time between start() and end() call and provides as result pr
      var timerMetric = spmClient.getCustomMetric (options)
      var stopwatch = timerMetric.timer().start()
      stopwatch.end()
-     testMetric.save()
+     timerMetric.save()
 ```
 
 ## Create Events to be correlated with your metrics in SPM
