@@ -7,7 +7,6 @@ describe('spm custom metrics ', function() {
     try {
       var spmcm = new SPM(token, 0)
       spmcm.once('send metrics', function (event) {
-        //console.log('add event ' + event)
         done()
       })
       var testMetric = spmcm.getCustomMetric({ name: 'test.metric', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2' })
@@ -25,7 +24,6 @@ describe('spm custom metrics ', function() {
   it('log events', function (done) {
     this.timeout(10000)
     try {
-      //console.log(token)
       var spmcm = new SPM(token, 0)
       var eventLogger = spmcm.getEventLogger({
         type: 'security',
@@ -43,7 +41,7 @@ describe('spm custom metrics ', function() {
   })
 
   it('meter', function (done) {
-    this.timeout = 30000
+    this.timeout(30000)
     try {
       var spmcm = new SPM(token, 0)
       var value = {}
@@ -61,8 +59,29 @@ describe('spm custom metrics ', function() {
     }
   })
 
+  it('counter', function (done) {
+    this.timeout(30000)
+    try {
+      var spmcm = new SPM(token, 0)
+      var value = 0
+      spmcm.once('send metrics', function (event) {
+        if (value>0)
+          done()
+        else
+          done ('failed ' + value)
+      })
+      var testMetric = spmcm.getCustomMetric({ name: 'test.meter', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2', valueFilter: ['count','mean'] })
+      testMetric.counter()
+      testMetric.inc()
+      value = testMetric.save()
+      spmcm.send()
+    } catch (err) {
+      done(err)
+    }
+  })
+
   it('histogram', function (done) {
-    this.timeout = 30000
+    this.timeout(30000)
     try {
       var spmcm = new SPM(token, 0)
       var value = {}
@@ -82,13 +101,16 @@ describe('spm custom metrics ', function() {
   })
 
   it('timer', function (done) {
-    this.timeout = 30000
+    this.timeout(30000)
     try {
       var spmcm = new SPM(token, 0)
       var value = {}
       spmcm.once('send metrics', function (event) {
-        if (value.min>300)
+        if (value.min>200)
           done()
+        else {
+          done (new Error ('value : ' + value.min))
+        }
       })
       var testMetric = spmcm.getCustomMetric({ name: 'test.timer', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2' })
       var stopwatch = testMetric.timer().start()
@@ -96,7 +118,7 @@ describe('spm custom metrics ', function() {
         stopwatch.end()
         value = testMetric.save()
         spmcm.send()
-      }, 500)
+      }, 200)
     } catch (err) {
       done(err)
     }
