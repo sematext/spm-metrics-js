@@ -65,7 +65,7 @@ the metric object should be initialized by declaring an 'interval' for generatin
 - interval - time in ms to call save() periodically. Defaults to no automatic call of save(). The save() function captures the metric and resets meters, histograms, counters or timers.
 - valueFilter - Array of property names for calculated values. Only specified fields are sent to SPM.
 
-Measurement functions like histogram(), meter(), timer() add calculated values as properties to the metrics like count, min, max, mean or percentiles. In SPM a metric called "time" might then apper as "time.min", "time.max", "time.mean" etc. 
+Measurement functions like histogram(), meter(), timer() add calculated values as properties to the metrics like count, min, max, mean or percentiles. In SPM a metric called "time" might then appear as "time.min", "time.max", "time.mean" etc.
 
 For example: If you want to send only 'count' and 'currentRate' calculated by a "meter" measurement to SPM you can use valueFilter option to limit what you send to SPM:
 
