@@ -1,6 +1,6 @@
 {
   "name": "spm-metrics-js",
-  "version": "1.0.4",
+  "version": "1.0.3",
   "description": "Node.js client for SPM - Custom Metrics and Event API",
   "main": "lib/index.js",
   "directories": {
