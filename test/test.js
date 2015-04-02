@@ -1,6 +1,7 @@
 var SPM = require('../lib/index.js')
 var token = process.env.SPM_TOKEN
 
+var trace = require ('trace')
 describe('spm custom metrics ', function () {
   it('set metric', function (done) {
     try {
@@ -8,6 +9,7 @@ describe('spm custom metrics ', function () {
       spmcm.once('send metrics', function (event) {
         done()
       })
+      spmcm.once('error', done)
       var testMetric = spmcm.getCustomMetric({ name: 'test.metric', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2' })
       testMetric.set(42)
       testMetric.set(34)
@@ -46,12 +48,13 @@ describe('spm custom metrics ', function () {
       var spmcm = new SPM(token, 0)
       var value = {}
       spmcm.once('send metrics', function (event) {
-        if (value.min > 200) {
+        if (value.min > 0) {
           done()
         } else {
-          done(new Error('value : ' + value.min))
+          done(new Error('value : ' + value))
         }
       })
+      spmcm.once('error', done)
       var testMetric = spmcm.getCustomMetric({ name: 'timer', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2' })
       var stopwatch = testMetric.timer().start()
       setTimeout(function () {
@@ -80,6 +83,7 @@ describe('spm custom metrics ', function () {
       }
       value = testMetric.save()
       spmcm.send()
+      spmcm.once('error', done)
     } catch (err) {
       done(err)
     }
@@ -93,7 +97,7 @@ describe('spm custom metrics ', function () {
         if (value > 0) {
           done()
         } else {
-          done('failed ' + value)
+          done(new Error ('failed ' + value))
         }
       })
       var testMetric = spmcm.getCustomMetric({ name: 'counter', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2' })
