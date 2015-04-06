@@ -60,7 +60,8 @@ describe('spm custom metrics ', function () {
       setTimeout(function () {
         stopwatch.end()
         value = testMetric.save()
-        spmcm.send()
+        if (value.min > 0)
+          done()
       }, 200)
     } catch (err) {
       done(err)

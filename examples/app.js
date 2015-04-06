@@ -10,7 +10,6 @@ function DemoApp () {
       setTimeout(function () { self.emit('login', 'test')}, 0)
     }
     loggedIn = count
-  // console.log ('login ' + count)
   }, 1000)
   setInterval(function () {
     var count = Math.round(Math.random() * 18 + 1)
