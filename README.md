@@ -169,7 +169,7 @@ We use a concept of delegate functions to simlify the combined usage of Custom M
 
 We recommend reading the documentation of [Measured](https://github.com/felixge/node-measured) for a better understanding of the measurement functions. 
 
-## Create Events to correlatee with your metrics in SPM
+## Create Events to correlate events with metrics in SPM
 
 Add an event to SPM Events, the callback function is optional (see events of spm-metrics-js)
 
