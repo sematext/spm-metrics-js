@@ -89,6 +89,34 @@ describe('spm custom metrics ', function () {
       done(err)
     }
   })
+  it('meter check valueFilter', function (done) {
+    this.timeout(30000)
+    try {
+      var spmcm = new SPM(token, 0)
+      var value = {}
+      spmcm.once('send metrics', function (event) {
+        if (value.count > 0) {
+          done()
+        }
+      })
+      var testMetric = spmcm.getCustomMetric({ name: 'meter', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2',
+      valueFilter: ['count'] })
+      testMetric.meter()
+      for (var i = 0; i < Math.round(Math.random()*100+1); i++) {
+        testMetric.mark()
+      }
+      value = testMetric.save()
+      // test for "removed" property 
+      if(value.hasOwnProperty('currentRate')) {
+        return done(new Error('valueFilter not working'))
+      }
+      spmcm.send()
+      spmcm.once('send error', done)
+      spmcm.once('send', done)
+    } catch (err) {
+      done(err)
+    }
+  })
   it('counter', function (done) {
     this.timeout(30000)
     try {
