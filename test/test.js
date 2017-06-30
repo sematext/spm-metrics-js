@@ -54,7 +54,6 @@ describe('spm custom metrics ', function () {
           done(new Error('value : ' + value))
         }
       })
-      spmcm.once('send error', done)
       var testMetric = spmcm.getCustomMetric({ name: 'timer', aggregation: 'avg', filter1: 'filter1', filter2: 'filter2' })
       var stopwatch = testMetric.timer().start()
       setTimeout(function () {
