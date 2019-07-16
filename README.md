@@ -1,3 +1,5 @@
+# This repo has been deprecated
+
 spm-metrics-js
 ==============
 
